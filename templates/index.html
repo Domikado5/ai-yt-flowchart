@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet"> 
+</head>
+<body>
+    <div class="container">
+        <h1 class="label">Question</h1>
+        <div class="choices">
+        </div>
+        <div class="buttons">
+            <button class="prev" onclick="sendAction('previous')">Previous</button>
+            <button class="res" onclick="sendAction('reset')">Reset</button>
+            <button class="next" onclick="sendAction('next')">Next</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.4.0/socket.io.min.js" integrity="sha384-1fOn6VtTq3PWwfsOrk45LnYcGosJwzMHv+Xh/Jx5303FVOXzEnw0EpLv30mtjmlj" crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf-8">
+        var socket = io();
+        socket.on('connect', function() {
+            socket.emit('connected', {data: 'Client: Connected'})
+        })
+
+        socket.on('connected', function(response){
+            console.log(response)
+        })
+
+        socket.on('reload', function(response){
+            document.querySelector("h1.label").innerHTML = response['label']
+            let radios = document.querySelector("div.choices")
+            radios.innerHTML = ""
+            if (response["choices"].length == 0){
+                radios.style.display = "none"
+            }else{
+                radios.style.display = "grid"
+                response["choices"].forEach(choice => {
+                    let div = document.createElement('div')
+                    div.classList.add("choice")
+                    div.classList.add("col")
+                    let label = document.createElement("h5")
+                    label.textContent = choice
+                    div.appendChild(label)
+                    let radiobtn = document.createElement('input')
+                    radiobtn.type = 'radio'
+                    radiobtn.setAttribute("name", "choice")
+                    radiobtn.value = choice
+                    if (response['selected'] == choice){
+                        radiobtn.checked = true
+                    }
+                    console.log(radiobtn)
+                    div.appendChild(radiobtn)
+                    radios.appendChild(div)
+                });
+            }
+            if (response["state"] == "initial"){
+                document.querySelector("button.prev").style.display = "none"
+                document.querySelector("button.res").style.display = "none"
+                document.querySelector("button.next").style.display = "block"
+            }else if (response["state"] == "final"){
+                document.querySelector("button.prev").style.display = "block"
+                document.querySelector("button.res").style.display = "block"
+                document.querySelector("button.next").style.display = "none"
+            }else{
+                document.querySelector("button.prev").style.display = "block"
+                document.querySelector("button.res").style.display = "none"
+                document.querySelector("button.next").style.display = "block"
+            }
+           console.log(response)
+        })
+
+        function sendAction(action){
+            let answer = ""
+            let choice = document.querySelector('input[name="choice"]:checked')
+            if (choice){
+                answer = choice.value
+            }
+            socket.emit('action', {'action': action, 'answer': answer})
+        }
+
+    </script>
+</body>
+</html>
