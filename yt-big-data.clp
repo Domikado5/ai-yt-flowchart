@@ -29,7 +29,7 @@
 ;;;***************
 ;;;* QUERY RULES *
 ;;;***************
-
+;;; So you want to watch YouTube?
 (defrule determine-yt-type ""
 
    (logical (start))
@@ -40,7 +40,7 @@
                      (relation-asserted yt-type)
                      (response Vlogger)
                      (valid-answers Vlogger))))
-   
+;;; Do you want a collab or single channel?
 (defrule determine-collab-single ""
 
    (logical (yt-type Vlogger))
@@ -51,7 +51,7 @@
                      (relation-asserted collab-single)
                      (response Collab)
                      (valid-answers Collab Single))))
-   
+;;; Do you want to watch new video or two year old videos?   
 (defrule determine-old-new ""
 
    (logical (collab-single Collab))
@@ -62,7 +62,7 @@
                      (relation-asserted new-old)
                      (response New)
                      (valid-answers New Old))))
-   
+;;; People in relationships make you...   
 (defrule determine-relationships ""
 
    (logical (new-old New))
@@ -83,7 +83,7 @@
 
    (assert (UI-state (display vloglovers)
                      (state final))))
-
+;;; Are you obsessed with doctor who?
 (defrule determine-doctor-who ""
 
    (logical (relationships Sick))
@@ -104,7 +104,7 @@
 
    (assert (UI-state (display tardistacular)
                      (state final))))
-
+;;; How many people do you want to watch?
 (defrule determine-how-many ""
 
    (logical (doctor-who WhatsThat))
@@ -176,131 +176,176 @@
    (assert (UI-state (display vlogbrothers)
                      (state final))))
 
-(defrule determine-point-surface-state ""
+;;; leaf fiveawesomeguys
+(defrule fiveawesomeguys-conclusions ""
 
-   (or (logical (engine-starts No)  
+   (logical (new-old Old))
    
-                (engine-rotates Yes))
-                     
-       (logical (engine-output-low Yes)))
-
    =>
 
-   (assert (UI-state (display PointsQuestion)
-                     (relation-asserted point-surface-state)
-                     (response Normal)
-                     (valid-answers Normal Burned Contaminated))))
+   (assert (UI-state (display fiveawesomeguys)
+                     (state final))))
 
-(defrule determine-conductivity-test ""
-   
-   (logical (engine-starts No)  
-   
-            (engine-rotates No)
-            
-            (battery-has-charge Yes))
+;;; What kind of accent do you like?
+(defrule determine-accent ""
+  
+   (logical (collab-single Single))
 
    =>
+   
+   (assert (UI-state (display AccentQuestion)
+                     (relation-asserted accent-like)
+                     (response SthElse)
+                     (valid-answers SthElse British American))))
+;;; Canada's cool, right?
+(defrule determine-canada ""
+  
+   (logical (accent-like SthElse))
 
-   (assert (UI-state (display CoilQuestion)
-                     (relation-asserted conductivity-test-positive)
+   =>
+   
+   (assert (UI-state (display CanadaQuestion)
+                     (relation-asserted canada-cool)
+                     (response Yeah!)
+                     (valid-answers Yeah! CanadaSucks))))
+;;; leaf Gunarolla
+(defrule gunarolla-conclusions ""
+
+   (logical (canada-cool Yeah!))
+   
+   =>
+
+   (assert (UI-state (display gunarolla)
+                     (state final))))
+;;; Which is funnier?
+(defrule determine-funnier ""
+  
+   (logical (canada-cool CanadaSucks))
+
+   =>
+   
+   (assert (UI-state (display FunnierQuestion)
+                     (relation-asserted funnier-which)
+                     (response JokesAboutChickens)
+                     (valid-answers JokesAboutChickens SelfDepricatingHumor))))
+;;; leaf robofillet
+(defrule robofillet-conclusions ""
+
+   (logical (funnier-which JokesAboutChickens))
+   
+   =>
+
+   (assert (UI-state (display robofillet)
+                     (state final))))
+;;; leaf communitychannel
+(defrule communitychannel-conclusions ""
+
+   (logical (funnier-which SelfDepricatingHumor))
+   
+   =>
+
+   (assert (UI-state (display communitychannel)
+                     (state final))))
+;;; Do you find David Tennant attractive?
+(defrule determine-david-tennant ""
+  
+   (logical (accent-like British))
+
+   =>
+   
+   (assert (UI-state (display DavidTennantQuestion)
+                     (relation-asserted david-attractive)
+                     (response Duh)
+                     (valid-answers Duh No))))
+;;; leaf littleradge
+(defrule littleradge-conclusions ""
+
+   (logical (david-attractive Duh))
+   
+   =>
+
+   (assert (UI-state (display littleradge)
+                     (state final))))
+;;; Well then, are boys who play an instrument hot?
+(defrule determine-boys-instrument ""
+  
+   (logical (david-attractive No))
+
+   =>
+   
+   (assert (UI-state (display InstrumentBoysQuestion)
+                     (relation-asserted instrument-boys-hot)
                      (response No)
                      (valid-answers No Yes))))
+;;; Do you prefer scripted or spontaneous videos?
+(defrule determine-scripted-spontaneous ""
+  
+   (logical (instrument-boys-hot No))
 
-;;;****************
-;;;* REPAIR RULES *
-;;;****************
+   =>
+   
+   (assert (UI-state (display ScriptedSpontaneousQuestion)
+                     (relation-asserted scripted-spontaneous)
+                     (response Scripted)
+                     (valid-answers Scripted Spontaneous))))
+;;; leaf electricfaeriedust
+(defrule electricfaeriedust-conclusions ""
 
-(defrule normal-engine-state-conclusions ""
-
-   (logical (runs-normally Yes))
+   (logical (scripted-spontaneous Scripted))
    
    =>
 
-   (assert (UI-state (display NoRepair)
+   (assert (UI-state (display electricfaeriedust)
                      (state final))))
+;;; leaf missxrojas
+(defrule missxrojas-conclusions ""
 
-(defrule engine-sluggish ""
-
-   (logical (engine-sluggish Yes))
+   (logical (scripted-spontaneous Spontaneous))
    
    =>
 
-   (assert (UI-state (display FuelLineRepair)
+   (assert (UI-state (display missxrojas)
                      (state final))))
-
-(defrule engine-misfires ""
-
-   (logical (engine-misfires Yes))
+;;; Do you hate twilight?
+(defrule determine-twilight-hate ""
+  
+   (logical (instrument-boys-hot Yes))
 
    =>
-
-   (assert (UI-state (display PointGapRepair)
-                     (state final))))
-
-(defrule engine-knocks ""
-
-   (logical (engine-knocks Yes))
-
-   =>
-
-   (assert (UI-state (display AdjustTimingRepair)
-                     (state final))))
-
-(defrule tank-out-of-gas ""
-
-   (logical (tank-has-gas No))
-
-   =>
-
-   (assert (UI-state (display AddGasRepair)
-                     (state final))))
    
-(defrule battery-dead ""
+   (assert (UI-state (display TwilightQuestion)
+                     (relation-asserted twilight-hate)
+                     (response Yes)
+                     (valid-answers Yes No Don'tCare))))
+;;; leaf nerimon
+(defrule nerimon-conclusions ""
 
-   (logical (battery-has-charge No))
+   (logical (twilight-hate Yes))
    
    =>
 
-   (assert (UI-state (display ReplaceBatteryRepair)
+   (assert (UI-state (display nerimon)
                      (state final))))
-   
-(defrule point-surface-state-burned ""
+;;; leaf getoutofmyflowchart
+(defrule getoutofmyflowchart-conclusions ""
 
-   (logical (point-surface-state Burned))
-
-   =>
-
-   (assert (UI-state (display ReplacePointsRepair)
-                     (state final))))
-                     
-(defrule point-surface-state-contaminated ""
-   
-   (logical (point-surface-state Contaminated))
+   (logical (twilight-hate No))
    
    =>
 
-   (assert (UI-state (display CleanPointsRepair)
+   (assert (UI-state (display getoutofmyflowchart)
                      (state final))))
+;;; leaf charlieissocoollike
+(defrule charlieissocoollike-conclusions ""
 
-(defrule conductivity-test-positive-yes ""
-
-   (logical (conductivity-test-positive Yes))
+   (logical (twilight-hate Don'tCare))
    
    =>
 
-   (assert (UI-state (display LeadWireRepair)
+   (assert (UI-state (display charlieissocoollike)
                      (state final))))
-                     
-(defrule conductivity-test-positive-no ""
-
-   (logical (conductivity-test-positive No))
-      
-   =>
-
-   (assert (UI-state (display CoilRepair)
-                     (state final))))
-                     
-(defrule no-repairs ""
+;;; leaf no answers
+(defrule no-answer ""
 
    (declare (salience -10))
   
@@ -310,7 +355,7 @@
      
    =>
   
-   (assert (UI-state (display MechanicRepair)
+   (assert (UI-state (display NoAnswer)
                      (state final))))
                      
 ;;;*************************
