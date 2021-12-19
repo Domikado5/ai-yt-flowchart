@@ -74,7 +74,7 @@
                      (response Happy)
                      (valid-answers Happy Sick))))
 
-;;; leaf
+;;; leaf vloglovers
 (defrule vloglovers-conclusions ""
 
    (logical (relationships Happy))

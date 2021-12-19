@@ -34,7 +34,12 @@
         })
 
         socket.on('reload', function(response){
-            document.querySelector("h1.label").innerHTML = response['label']
+            if (response['question'].length == 0){
+                document.querySelector("h1.label").innerHTML = response['label']
+            }else{
+                document.querySelector("h1.label").innerHTML = response['question']
+            }
+            
             let radios = document.querySelector("div.choices")
             radios.innerHTML = ""
             if (response["choices"].length == 0){

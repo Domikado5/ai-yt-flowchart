@@ -2,6 +2,7 @@ import clips
 from flask import Flask, render_template
 from flask_socketio import SocketIO, send, emit
 import socketio
+import sqlite3
 
 class UI:
     def __init__(self, clips_path: str, ):
@@ -13,6 +14,7 @@ class UI:
         self.env.reset()
         self.flag = False
         self.choices = []
+        self.question = ""
         self.selected = ""
         self.label = ""
         self.state = ""
@@ -53,11 +55,20 @@ class UI:
             bv = pv[i]
             self.choices.append(pv[i])
 
+
             # create radio button
 
         #  Set up label
         text = dict(fv)["display"]
         self.label = text
+        self.question = ""
+        con = sqlite3.connect('./questions.db')
+        cur = con.cursor()
+        cur.execute("SELECT question FROM questions WHERE key = '%s'" % text)
+        row = cur.fetchone()
+        con.close()
+        if row is not None:
+            self.question = row[0]
 
     def action(self, action: str, response: str):
         eval_string = "(find-all-facts ((?f state-list)) TRUE)"
@@ -102,22 +113,16 @@ def test_connect():
 @socketio.on('connected')
 def connected(json):
     print(str(json))
-    emit('reload', {'label': ui.label, 'choices': ui.choices, 'selected': ui.selected, 'state': ui.state})
+    emit('reload', {'label': ui.label, 'question': ui.question, 'choices': ui.choices, 'selected': ui.selected, 'state': ui.state})
 
 @socketio.on('disconnect')
 def test_disconnect():
     print('Client disconnected')
 
-@socketio.on('my event')
-def handle_event(json):
-    print(f'received json: {str(json)}')
-
-    emit("my response", json)
-
 @socketio.on('action')
 def handle_next(json):
     ui.action(json['action'], json['answer'])
-    emit('reload', {'label': ui.label, 'choices': ui.choices, 'selected': ui.selected, 'state': ui.state})
+    emit('reload', {'label': ui.label, 'question': ui.question, 'choices': ui.choices, 'selected': ui.selected, 'state': ui.state})
 
 if __name__ == '__main__':
     socketio.run(app)
