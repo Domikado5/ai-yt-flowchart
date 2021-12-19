@@ -344,6 +344,166 @@
 
    (assert (UI-state (display charlieissocoollike)
                      (state final))))
+;;; someone who sometimes sings or never sings?
+(defrule determine-singing ""
+   (logical (accent-like American))
+   =>
+   (assert (UI-state (display SingingQuestion)
+                     (relation-asserted does-sing)
+                     (response NeverSings)
+                     (valid-answers NeverSings SometimesSings)))
+)
+;;; do you like rapping?
+(defrule determine-rapping ""
+   (logical (does-sing SometimesSings))
+   =>
+   (assert (UI-state (display RappingQuestion)
+                     (relation-asserted likes-rapping)
+                     (response Yes)
+                     (valid-answers Yes No)))
+)
+;;; leaf HayleyGhoover
+(defrule hayleyghoover-conclusions ""
+   (logical (likes-rapping Yes))
+   =>
+   (assert (UI-state (display hayleyghoover)
+                     (state final)))
+)
+;;; do you only like songs about breakfast?
+(defrule likes-breakfast-songs ""
+   (logical (likes-rapping No))
+   =>
+   (assert (UI-state (display LikesBreakfast)
+                     (relation-asserted likes-breakfast)
+                     (response OfCourse)
+                     (valid-answers OfCourse UmNo)))
+)
+;;; leaf wheezywaiter
+(defrule wheezywaiter-conclusions ""
+   (logical (likes-breakfast OfCourse))
+   =>
+   (assert (UI-state (display WheezyWaiter)
+                     (state final)))
+)
+;;; do you really like charts and graphs?
+(defrule likes-charts-graphs ""
+   (logical (likes-breakfast UmNo))
+   =>
+   (assert (UI-state (display LikesCharts)
+                     (relation-asserted likes-charts)
+                     (response Yes)
+                     (valid-answers Yes NotReally)))
+)
+;;; leaf mickeleh
+(defrule mickeleh-conclusions ""
+   (logical (likes-charts Yes))
+   =>
+   (assert (UI-state (display Mickeleh)
+                     (state final)))
+)
+;;; do you love all caps?
+(defrule loves-all-caps ""
+   (logical (likes-charts NotReally))
+   =>
+   (assert (UI-state (display LovesCaps)
+                     (relation-asserted loves-caps)
+                     (response Yes)
+                     (valid-answers Yes NotMyStyle)))
+)
+;;; do girls or boys rule?
+(defrule likes-charts-graphs ""
+   (logical (loves-caps Yes))
+   =>
+   (assert (UI-state (display GirlsBoysRule)
+                     (relation-asserted girls-boys-rule)
+                     (response Girls)
+                     (valid-answers Girls Boys)))
+)
+;;; leaf italktosnakes
+(defrule italktosnakes-conclusions ""
+   (logical (girls-boys-rule Girls))
+   =>
+   (assert (UI-state (display ITalkToSnakes)
+                     (state final)))
+)
+;;; leaf lukeconard
+(defrule lukeconard-conclusions ""
+   (logical (girls-boys-rule Boys))
+   =>
+   (assert (UI-state (display LukeConard)
+                     (state final)))
+)
+;;; do you insist on watching a fiveawesomegirl?
+(defrule insists-watching-fiveawesomegirl ""
+   (logical (loves-caps NotMyStyle))
+   =>
+   (assert (UI-state (display InsistWatchingFiveawesomegirl)
+                     (relation-asserted insists-fiveawesomegirl)
+                     (response Yes)
+                     (valid-answers Yes No)))
+)
+;;; leaf devilishlypure
+(defrule devilshilypure-conclusions ""
+   (logical (insists-fiveawesomegirl Yes))
+   =>
+   (assert (UI-state (display DevilishLypure)
+                     (state final)))
+)
+;;; do you like really, really happy people?
+(defrule like-really-happy-people ""
+   (logical (insists-fiveawesomegirl No))
+   =>
+   (assert (UI-state (display LikeReallyHappyPeople)
+                     (relation-asserted likes-really-happy-people)
+                     (response =[)
+                     (valid-answers =[ =D)))
+)
+;;; leaf hopeonatenspeed
+(defrule devilshilypure-conclusions ""
+   (logical (likes-really-happy-people =D))
+   =>
+   (assert (UI-state (display HopeOnAtenSpeed)
+                     (state final)))
+)
+;;; when not singing, you want your vlogger to..
+(defrule you-want-your-vlogger-to ""
+   (logical (likes-really-happy-people =[))
+   =>
+   (assert (UI-state (display YouWantYourVloggerTo)
+                     (relation-asserted wants-vlogger-to)
+                     (response TalkFast)
+                     (valid-answers TalkFast TalkSlow)))
+)
+;;; leaf fizzylimon
+(defrule fizzylimon-conclusions ""
+   (logical (wants-vlogger-to TalkFast))
+   =>
+   (assert (UI-state (display FizzyLimon)
+                     (state final)))
+)
+;;; you prefer your vlogger to review..
+(defrule you-prefer-your-vlogger-to ""
+   (logical (wants-vlogger-to TalkSlow))
+   =>
+   (assert (UI-state (display YouPreferYourVloggerTo)
+                     (relation-asserted prefers-vlogger-to)
+                     (response Technology)
+                     (valid-answers Technology Books)))
+)
+;;; leaf ijustine
+(defrule ijustine-conclusions ""
+   (logical (prefers-vlogger-to Technology))
+   =>
+   (assert (UI-state (display IJustine)
+                     (state final)))
+)
+;;; leaf bandgeek8408
+(defrule bandgeek8408-conclusions ""
+   (logical (prefers-vlogger-to Books))
+   =>
+   (assert (UI-state (display BandGeek8408)
+                     (state final)))
+)
 ;;; leaf no answers
 (defrule no-answer ""
 
