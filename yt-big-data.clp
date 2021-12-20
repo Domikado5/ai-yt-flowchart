@@ -13,22 +13,16 @@
 (deffacts startup
    (state-list))
    
-;;;****************
-;;;* STARTUP RULE *
-;;;****************
-
+;;; Startup
 (defrule system-banner ""
 
   =>
   
-  (assert (UI-state (display WelcomeMessage)
+  (assert (UI-state (display "Welcome! Press Next to continue.")
                     (relation-asserted start)
                     (state initial)
                     (valid-answers))))
 
-;;;***************
-;;;* QUERY RULES *
-;;;***************
 ;;; So you want to watch YouTube?
 (defrule determine-yt-type ""
 
@@ -36,7 +30,7 @@
 
    =>
 
-   (assert (UI-state (display StartQuestion)
+   (assert (UI-state (display "So you want to watch YouTube?")
                      (relation-asserted yt-type)
                      (response Vlogger)
                      (valid-answers Vlogger))))
@@ -47,7 +41,7 @@
 
    =>
 
-   (assert (UI-state (display CollabSingleQuestion)
+   (assert (UI-state (display "Do you want a collab or single channel?")
                      (relation-asserted collab-single)
                      (response Collab)
                      (valid-answers Collab Single))))
@@ -58,7 +52,7 @@
 
    =>
 
-   (assert (UI-state (display NewOldVideosQuestion)
+   (assert (UI-state (display "Do you want to watch new video or two year old videos?")
                      (relation-asserted new-old)
                      (response New)
                      (valid-answers New Old))))
@@ -69,7 +63,7 @@
 
    =>
 
-   (assert (UI-state (display RelationshipsQuestion)
+   (assert (UI-state (display "People in relationships make you...")
                      (relation-asserted relationships)
                      (response Happy)
                      (valid-answers Happy Sick))))
@@ -90,12 +84,12 @@
 
    =>
 
-   (assert (UI-state (display DoctorWhoQuestion)
+   (assert (UI-state (display "Are you obsessed with doctor who?")
                      (relation-asserted doctor-who)
                      (response Absolutely)
                      (valid-answers Absolutely WhatsThat))))
 
-;;; leaf
+;;; leaf tardistacular
 (defrule tardistacular-conclusions ""
 
    (logical (doctor-who Absolutely))
@@ -111,11 +105,11 @@
 
    =>
 
-   (assert (UI-state (display HowManyPeopleQuestion)
+   (assert (UI-state (display "How many people do you want to watch?")
                      (relation-asserted how-many-people)
                      (response Five)
                      (valid-answers Five Two))))
-;;; leaf
+;;; leaf fiveawesomegirls
 (defrule fiveawesomegirls-conclusions ""
 
    (logical (how-many-people Five))
@@ -131,7 +125,7 @@
 
    =>
 
-   (assert (UI-state (display ShortTallQuestion)
+   (assert (UI-state (display "Do you want to watch short or tall people?")
                      (relation-asserted short-tall)
                      (response Short)
                      (valid-answers Short Tall))))
@@ -152,7 +146,7 @@
 
    =>
    
-   (assert (UI-state (display GirlsBoysQuestion)
+   (assert (UI-state (display "Girls Or Boys?")
                      (relation-asserted girls-boys)
                      (response Girls)
                      (valid-answers Girls Boys))))
@@ -193,7 +187,7 @@
 
    =>
    
-   (assert (UI-state (display AccentQuestion)
+   (assert (UI-state (display "What kind of accent do you like?")
                      (relation-asserted accent-like)
                      (response SthElse)
                      (valid-answers SthElse British American))))
@@ -204,7 +198,7 @@
 
    =>
    
-   (assert (UI-state (display CanadaQuestion)
+   (assert (UI-state (display "Canada's cool, right?")
                      (relation-asserted canada-cool)
                      (response Yeah!)
                      (valid-answers Yeah! CanadaSucks))))
@@ -224,7 +218,7 @@
 
    =>
    
-   (assert (UI-state (display FunnierQuestion)
+   (assert (UI-state (display "Which is funnier?")
                      (relation-asserted funnier-which)
                      (response JokesAboutChickens)
                      (valid-answers JokesAboutChickens SelfDepricatingHumor))))
@@ -253,7 +247,7 @@
 
    =>
    
-   (assert (UI-state (display DavidTennantQuestion)
+   (assert (UI-state (display "Do you find David Tennant attractive?")
                      (relation-asserted david-attractive)
                      (response Duh)
                      (valid-answers Duh No))))
@@ -273,7 +267,7 @@
 
    =>
    
-   (assert (UI-state (display InstrumentBoysQuestion)
+   (assert (UI-state (display "Well then, are boys who play an instrument hot?")
                      (relation-asserted instrument-boys-hot)
                      (response No)
                      (valid-answers No Yes))))
@@ -284,7 +278,7 @@
 
    =>
    
-   (assert (UI-state (display ScriptedSpontaneousQuestion)
+   (assert (UI-state (display "Do you prefer scripted or spontaneous videos?")
                      (relation-asserted scripted-spontaneous)
                      (response Scripted)
                      (valid-answers Scripted Spontaneous))))
@@ -313,7 +307,7 @@
 
    =>
    
-   (assert (UI-state (display TwilightQuestion)
+   (assert (UI-state (display "Do you hate twilight?")
                      (relation-asserted twilight-hate)
                      (response Yes)
                      (valid-answers Yes No Don'tCare))))
@@ -344,20 +338,20 @@
 
    (assert (UI-state (display charlieissocoollike)
                      (state final))))
-;;; someone who sometimes sings or never sings?
+;;; Someone who sometimes sings or never sings?
 (defrule determine-singing ""
    (logical (accent-like American))
    =>
-   (assert (UI-state (display SingingQuestion)
+   (assert (UI-state (display "Someone who sometimes sings or never sings?")
                      (relation-asserted does-sing)
                      (response NeverSings)
                      (valid-answers NeverSings SometimesSings)))
 )
-;;; do you like rapping?
+;;; Do you like rapping?
 (defrule determine-rapping ""
    (logical (does-sing SometimesSings))
    =>
-   (assert (UI-state (display RappingQuestion)
+   (assert (UI-state (display "Do you like rapping?")
                      (relation-asserted likes-rapping)
                      (response Yes)
                      (valid-answers Yes No)))
@@ -369,11 +363,11 @@
    (assert (UI-state (display hayleyghoover)
                      (state final)))
 )
-;;; do you only like songs about breakfast?
-(defrule likes-breakfast-songs ""
+;;; Do you only like songs about breakfast?
+(defrule determine-likes-breakfast-songs ""
    (logical (likes-rapping No))
    =>
-   (assert (UI-state (display LikesBreakfast)
+   (assert (UI-state (display "Do you only like songs about breakfast?")
                      (relation-asserted likes-breakfast)
                      (response OfCourse)
                      (valid-answers OfCourse UmNo)))
@@ -385,11 +379,11 @@
    (assert (UI-state (display WheezyWaiter)
                      (state final)))
 )
-;;; do you really like charts and graphs?
-(defrule likes-graphs ""
+;;; Do you really like charts and graphs?
+(defrule determine-likes-graphs ""
    (logical (likes-breakfast UmNo))
    =>
-   (assert (UI-state (display GraphQuestion)
+   (assert (UI-state (display "Do you really like charts and graphs?")
                      (relation-asserted likes-charts)
                      (response Yes)
                      (valid-answers Yes NotReally)))
@@ -401,20 +395,20 @@
    (assert (UI-state (display Mickeleh)
                      (state final)))
 )
-;;; do you love all caps?
-(defrule loves-all-caps ""
+;;; Do you love all caps?
+(defrule determine-loves-all-caps ""
    (logical (likes-charts NotReally))
    =>
-   (assert (UI-state (display LovesCaps)
+   (assert (UI-state (display "Do you love all caps?")
                      (relation-asserted loves-caps)
                      (response Yes)
                      (valid-answers Yes NotMyStyle)))
 )
-;;; do girls or boys rule?
-(defrule likes-charts-graphs ""
+;;; Do girls or boys rule?
+(defrule determine-likes-charts-graphs ""
    (logical (loves-caps Yes))
    =>
-   (assert (UI-state (display GirlsBoysRule)
+   (assert (UI-state (display "Do girls or boys rule?")
                      (relation-asserted girls-boys-rule)
                      (response Girls)
                      (valid-answers Girls Boys)))
@@ -433,11 +427,11 @@
    (assert (UI-state (display LukeConard)
                      (state final)))
 )
-;;; do you insist on watching a fiveawesomegirl?
-(defrule insists-watching-fiveawesomegirl ""
+;;; Do you insist on watching a fiveawesomegirl?
+(defrule determine-insists-watching-fiveawesomegirl ""
    (logical (loves-caps NotMyStyle))
    =>
-   (assert (UI-state (display InsistWatchingFiveawesomegirl)
+   (assert (UI-state (display "Do you insist on watching a fiveawesomegirl?")
                      (relation-asserted insists-fiveawesomegirl)
                      (response Yes)
                      (valid-answers Yes No)))
@@ -449,11 +443,11 @@
    (assert (UI-state (display devilishlypure)
                      (state final)))
 )
-;;; do you like really, really happy people?
-(defrule like-really-happy-people ""
+;;; Do you like really, really happy people?
+(defrule determine-like-really-happy-people ""
    (logical (insists-fiveawesomegirl No))
    =>
-   (assert (UI-state (display LikeReallyHappyPeople)
+   (assert (UI-state (display "Do you like really, really happy people?")
                      (relation-asserted likes-really-happy-people)
                      (response =[)
                      (valid-answers =[ =D)))
@@ -465,11 +459,11 @@
    (assert (UI-state (display HopeOnAtenSpeed)
                      (state final)))
 )
-;;; when not singing, you want your vlogger to..
-(defrule you-want-your-vlogger-to ""
+;;; When not singing, you want your vlogger to..
+(defrule determine-you-want-your-vlogger-to ""
    (logical (likes-really-happy-people =[))
    =>
-   (assert (UI-state (display YouWantYourVloggerTo)
+   (assert (UI-state (display "When not singing, you want your vlogger to..")
                      (relation-asserted wants-vlogger-to)
                      (response TalkFast)
                      (valid-answers TalkFast TalkSlow)))
@@ -481,11 +475,11 @@
    (assert (UI-state (display FizzyLimon)
                      (state final)))
 )
-;;; you prefer your vlogger to review..
-(defrule you-prefer-your-vlogger-to ""
+;;; You prefer your vlogger to review..
+(defrule determine-you-prefer-your-vlogger-to ""
    (logical (wants-vlogger-to TalkSlow))
    =>
-   (assert (UI-state (display YouPreferYourVloggerTo)
+   (assert (UI-state (display "You prefer your vlogger to review..")
                      (relation-asserted prefers-vlogger-to)
                      (response Technology)
                      (valid-answers Technology Books)))
@@ -508,7 +502,7 @@
 (defrule determine-daily ""
    (logical (does-sing NeverSings))
    =>
-   (assert (UI-state (display DailyQuestion)
+   (assert (UI-state (display "Do you want daily videos?")
                      (relation-asserted want-daily)
                      (response Yes)
                      (valid-answers Yes No)))
@@ -524,7 +518,7 @@
 (defrule determine-avice ""
    (logical (want-daily No))
    =>
-   (assert (UI-state (display AviceQuestion)
+   (assert (UI-state (display "Do you need avice?")
                      (relation-asserted need-avice)
                      (response YesPlease)
                      (valid-answers YesPlease No)))
@@ -540,7 +534,7 @@
 (defrule determine-versions ""
    (logical (need-avice No))
    =>
-   (assert (UI-state (display VersionsQuestion)
+   (assert (UI-state (display "Do you like seeing people play different versions of themselves?")
                      (relation-asserted like-versions)
                      (response Yes)
                      (valid-answers Yes NoThat'sWeird)))
@@ -556,7 +550,7 @@
 (defrule determine-subscribers ""
    (logical (like-versions NoThat'sWeird))
    =>
-   (assert (UI-state (display SubscribersQuestion)
+   (assert (UI-state (display "Hom many subscribers do you prefer to have?")
                      (relation-asserted many-subscribers)
                      (response MoreThan100,000)
                      (valid-answers MoreThan100,000 LessThan100,000)))
@@ -565,7 +559,7 @@
 (defrule determine-watch-someone ""
    (logical (many-subscribers MoreThan100,000))
    =>
-   (assert (UI-state (display WatchQuestion)
+   (assert (UI-state (display "Do you want to watch someone...")
                      (relation-asserted want-watch)
                      (response TalkWorldIssues)
                      (valid-answers TalkWorldIssues PutOnMake-Up RantAndBeAdorable)))
@@ -595,7 +589,7 @@
 (defrule determine-typography ""
    (logical (many-subscribers LessThan100,000))
    =>
-   (assert (UI-state (display TypographyQuestion)
+   (assert (UI-state (display "Typography is cool.")
                      (relation-asserted typography-cool)
                      (response Agreed.)
                      (valid-answers Agreed. What'sTypography)))
@@ -611,7 +605,7 @@
 (defrule determine-fiveawesomes ""
    (logical (typography-cool What'sTypography))
    =>
-   (assert (UI-state (display FiveawesomesQuestion)
+   (assert (UI-state (display "Do you only watch fiveawesomes?")
                      (relation-asserted only-fiveawesomes)
                      (response Yes)
                      (valid-answers Yes WhoAreThey)))
@@ -620,7 +614,7 @@
 (defrule determine-sex ""
    (logical (only-fiveawesomes Yes))
    =>
-   (assert (UI-state (display GirlsBoysQuestion)
+   (assert (UI-state (display "Girls or Boys?")
                      (relation-asserted girls-boys-2)
                      (response Boys)
                      (valid-answers Boys Girls)))
@@ -643,7 +637,7 @@
 (defrule determine-picky ""
    (logical (only-fiveawesomes WhoAreThey))
    =>
-   (assert (UI-state (display YouSureArePickyQuestion)
+   (assert (UI-state (display "You Sure are picky.")
                      (relation-asserted picky)
                      (response Yup.)
                      (valid-answers Yup.)))
@@ -652,30 +646,14 @@
 (defrule owlssayhoot-conclusions ""
    (logical (picky Yup.))
    =>
-   (assert (UI-state (display TryThatzak.EveryoneLikesHim)
+   (assert (UI-state (display "Try thatzak. Everyone likes him")
                      (state final)))
 )
-;;; leaf no answers
-(defrule no-answer ""
 
-   (declare (salience -10))
-  
-   (logical (UI-state (id ?id)))
-   
-   (state-list (current ?id))
-     
-   =>
-  
-   (assert (UI-state (display NoAnswer)
-                     (state final))))
-                     
-;;;*************************
-;;;* GUI INTERACTION RULES *
-;;;*************************
-
+;;; Ask Question:
+;;; If current UI-state is not in state-list: sequence 
+;;; than add UI-state to state list and change current to UI-state id
 (defrule ask-question
-
-   (declare (salience 5))
    
    (UI-state (id ?id))
    
@@ -688,9 +666,8 @@
    
    (halt))
 
+;;; Next question without response no change
 (defrule handle-next-no-change-none-middle-of-chain
-
-   (declare (salience 10))
    
    ?f1 <- (next ?id)
 
@@ -704,9 +681,11 @@
    
    (halt))
 
+;;; Next Question Without Response:\
+;;; If user send (next ?id) without the response
+;;; and id is in UI-state and state-list sequence
+;;; than remove (next id) and assert (add-response id)
 (defrule handle-next-response-none-end-of-chain
-
-   (declare (salience 10))
    
    ?f <- (next ?id)
 
@@ -721,9 +700,8 @@
 
    (assert (add-response ?id)))   
 
+;;; Next 
 (defrule handle-next-no-change-middle-of-chain
-
-   (declare (salience 10))
    
    ?f1 <- (next ?id ?response)
 
@@ -739,9 +717,9 @@
    
    (halt))
 
+;;; Next question with response
+;;; 
 (defrule handle-next-change-middle-of-chain
-
-   (declare (salience 10))
    
    (next ?id ?response)
 
@@ -756,10 +734,10 @@
    (modify ?f1 (sequence ?b ?id ?e))
    
    (retract ?f2))
-   
-(defrule handle-next-response-end-of-chain
 
-   (declare (salience 10))
+;;; next question with response - leaf/end of chain/state final
+;;; 
+(defrule handle-next-response-end-of-chain
    
    ?f1 <- (next ?id ?response)
    
@@ -779,9 +757,10 @@
       
    (assert (add-response ?id ?response)))   
 
+;;; add response
+;;; assert new relation and response
+;;; retract add-response
 (defrule handle-add-response
-
-   (declare (salience 10))
    
    (logical (UI-state (id ?id)
                       (relation-asserted ?relation)))
@@ -794,9 +773,10 @@
    
    (retract ?f1))   
 
+;;; add response none
+;;; assert relation only (without response)
+;;; retract add response
 (defrule handle-add-response-none
-
-   (declare (salience 10))
    
    (logical (UI-state (id ?id)
                       (relation-asserted ?relation)))
@@ -809,9 +789,10 @@
    
    (retract ?f1))   
 
+;;; previous 
+;;; retract f1
+;;; change state-list current to previous one
 (defrule handle-prev
-
-   (declare (salience 10))
       
    ?f1 <- (prev ?id)
    
