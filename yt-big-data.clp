@@ -386,10 +386,10 @@
                      (state final)))
 )
 ;;; do you really like charts and graphs?
-(defrule likes-charts-graphs ""
+(defrule likes-graphs ""
    (logical (likes-breakfast UmNo))
    =>
-   (assert (UI-state (display LikesCharts)
+   (assert (UI-state (display GraphQuestion)
                      (relation-asserted likes-charts)
                      (response Yes)
                      (valid-answers Yes NotReally)))
@@ -443,10 +443,10 @@
                      (valid-answers Yes No)))
 )
 ;;; leaf devilishlypure
-(defrule devilshilypure-conclusions ""
+(defrule devilishlypure-conclusions ""
    (logical (insists-fiveawesomegirl Yes))
    =>
-   (assert (UI-state (display DevilishLypure)
+   (assert (UI-state (display devilishlypure)
                      (state final)))
 )
 ;;; do you like really, really happy people?

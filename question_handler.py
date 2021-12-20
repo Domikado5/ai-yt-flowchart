@@ -24,6 +24,16 @@ questions_list = [
     ('InstrumentBoysQuestion', 'Well then, are boys who play an instrument hot?'),
     ('ScriptedSpontaneousQuestion', 'Do you prefer scripted or spontaneous videos?'),
     ('TwilightQuestion', 'Do you hate twilight?'),
+    ('SingingQuestion','Someone who sometimes sings or never sings?'),
+    ('RappingQuestion','Do you like rapping?'),
+    ('LikesBreakfast','Do you only like songs about breakfast?'),
+    ('GraphQuestion','Do you really like charts and graphs?'),
+    ('LovesCaps','Do you love all caps?'),
+    ('GirlsBoysRule','Do girls or boys rule?'),
+    ('InsistWatchingFiveawesomegirl','Do you insist on watching a fiveawesomegirl?'),
+    ('LikeReallyHappyPeople','Do you like really, really happy people?'),
+    ('YouWantYourVloggerTo','When not singing, you want your vlogger to..'),
+    ('YouPreferYourVloggerTo','You prefer your vlogger to review..'),
 ]
 cur.executemany('INSERT INTO questions VALUES (?, ?);', questions_list)
 
