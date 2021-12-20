@@ -504,6 +504,157 @@
    (assert (UI-state (display BandGeek8408)
                      (state final)))
 )
+;;; Do you want daily videos?
+(defrule determine-daily ""
+   (logical (does-sing NeverSings))
+   =>
+   (assert (UI-state (display DailyQuestion)
+                     (relation-asserted want-daily)
+                     (response Yes)
+                     (valid-answers Yes No)))
+)
+;;; leaf breakingnyc
+(defrule breakingnyc-conclusions ""
+   (logical (want-daily Yes))
+   =>
+   (assert (UI-state (display breakingnyc)
+                     (state final)))
+)
+;;; Do you need avice?
+(defrule determine-avice ""
+   (logical (want-daily No))
+   =>
+   (assert (UI-state (display AviceQuestion)
+                     (relation-asserted need-avice)
+                     (response YesPlease)
+                     (valid-answers YesPlease No)))
+)
+;;; leaf peron75
+(defrule peron75-conclusions ""
+   (logical (need-avice YesPlease))
+   =>
+   (assert (UI-state (display peron75)
+                     (state final)))
+)
+;;; Do you like seeing people play different versions of themselves?
+(defrule determine-versions ""
+   (logical (need-avice No))
+   =>
+   (assert (UI-state (display VersionsQuestion)
+                     (relation-asserted like-versions)
+                     (response Yes)
+                     (valid-answers Yes NoThat'sWeird)))
+)
+;;; leaf elmify
+(defrule elmify-conclusions ""
+   (logical (like-versions Yes))
+   =>
+   (assert (UI-state (display elmify)
+                     (state final)))
+)
+;;; Hom many subscribers do you prefer to have?
+(defrule determine-subscribers ""
+   (logical (like-versions NoThat'sWeird))
+   =>
+   (assert (UI-state (display SubscribersQuestion)
+                     (relation-asserted many-subscribers)
+                     (response MoreThan100,000)
+                     (valid-answers MoreThan100,000 LessThan100,000)))
+)
+;;; Do you want to watch someone...
+(defrule determine-watch-someone ""
+   (logical (many-subscribers MoreThan100,000))
+   =>
+   (assert (UI-state (display WatchQuestion)
+                     (relation-asserted want-watch)
+                     (response TalkWorldIssues)
+                     (valid-answers TalkWorldIssues PutOnMake-Up RantAndBeAdorable)))
+)
+;;; leaf pogobat
+(defrule pogobat-conclusions ""
+   (logical (want-watch TalkWorldIssues))
+   =>
+   (assert (UI-state (display pogobat)
+                     (state final)))
+)
+;;; leaf michellephan
+(defrule michellephan-conclusions ""
+   (logical (want-watch PutOnMake-Up))
+   =>
+   (assert (UI-state (display michellephan)
+                     (state final)))
+)
+;;; leaf meekakitty
+(defrule meekakitty-conclusions ""
+   (logical (want-watch RantAndBeAdorable))
+   =>
+   (assert (UI-state (display meekakitty)
+                     (state final)))
+)
+;;; Typography is cool.
+(defrule determine-typography ""
+   (logical (many-subscribers LessThan100,000))
+   =>
+   (assert (UI-state (display TypographyQuestion)
+                     (relation-asserted typography-cool)
+                     (response Agreed.)
+                     (valid-answers Agreed. What'sTypography)))
+)
+;;; leaf xperpetualmotion
+(defrule xperpetualmotion-conclusions ""
+   (logical (typography-cool Agreed.))
+   =>
+   (assert (UI-state (display xperpetualmotion)
+                     (state final)))
+)
+;;; Do you only watch fiveawesomes?
+(defrule determine-fiveawesomes ""
+   (logical (typography-cool What'sTypography))
+   =>
+   (assert (UI-state (display FiveawesomesQuestion)
+                     (relation-asserted only-fiveawesomes)
+                     (response Yes)
+                     (valid-answers Yes WhoAreThey)))
+)
+;;; Girls or Boys?
+(defrule determine-sex ""
+   (logical (only-fiveawesomes Yes))
+   =>
+   (assert (UI-state (display GirlsBoysQuestion)
+                     (relation-asserted girls-boys-2)
+                     (response Boys)
+                     (valid-answers Boys Girls)))
+)
+;;; leaf alanvlogs
+(defrule alanvlogs-conclusions ""
+   (logical (girls-boys-2 Boys))
+   =>
+   (assert (UI-state (display alanvlogs)
+                     (state final)))
+)
+;;; leaf owlssayhoot
+(defrule owlssayhoot-conclusions ""
+   (logical (girls-boys-2 Girls))
+   =>
+   (assert (UI-state (display owlssayhoot)
+                     (state final)))
+)
+;;; You Sure are picky.
+(defrule determine-picky ""
+   (logical (only-fiveawesomes WhoAreThey))
+   =>
+   (assert (UI-state (display YouSureArePickyQuestion)
+                     (relation-asserted picky)
+                     (response Yup.)
+                     (valid-answers Yup.)))
+)
+;;; leaf thatzak
+(defrule owlssayhoot-conclusions ""
+   (logical (picky Yup.))
+   =>
+   (assert (UI-state (display TryThatzak.EveryoneLikesHim)
+                     (state final)))
+)
 ;;; leaf no answers
 (defrule no-answer ""
 

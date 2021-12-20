@@ -34,6 +34,14 @@ questions_list = [
     ('LikeReallyHappyPeople','Do you like really, really happy people?'),
     ('YouWantYourVloggerTo','When not singing, you want your vlogger to..'),
     ('YouPreferYourVloggerTo','You prefer your vlogger to review..'),
+    ('DailyQuestion','Do you want daily videos?'),
+    ('AviceQuestion','Do you need avice?'),
+    ('VersionsQuestion','Do you like seeing people play different versions of themselves?'),
+    ('SubscribersQuestion','Hom many subscribers do you prefer to have?'),
+    ('WatchQuestion','Do you want to watch someone...'),
+    ('TypographyQuestion','Typography is cool.'),
+    ('FiveawesomesQuestion','Do you only watch fiveawesomes?'),
+    ('YouSureArePickyQuestion','You Sure are picky.'),
 ]
 cur.executemany('INSERT INTO questions VALUES (?, ?);', questions_list)
 
