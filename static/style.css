@@ -10,7 +10,7 @@ body{
 }
 
 div.container{
-    display: gird;
+    display: grid;
     place-items: center;
     border-radius: 5px;
     padding: 10px;
@@ -35,7 +35,7 @@ h5{
 
 div.choices{
     display: grid;
-    grid-template-rows: 100%;
+    grid-template-columns: 100%;
 }
 
 div.choice{
