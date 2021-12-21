@@ -7,6 +7,7 @@ body{
     font-size: 3rem;
     background-color: #202020;
     color: #FFFFFF;
+    overflow: hidden;
 }
 
 div.container{
@@ -15,6 +16,7 @@ div.container{
     border-radius: 5px;
     padding: 10px;
     background-color: #181818;
+    z-index: 20;
 }
 
 h1.label, h5, h4{
@@ -129,4 +131,26 @@ input {
   
   input:checked {
     border: 6px solid #ffffff;
+  }
+
+  div.yt{
+    position: absolute;
+    width: 250px;
+    height: 150px;
+    background-color: #FF0000;
+    border-radius: 30px;
+    display: grid;
+    place-items: center;
+    z-index: 10;
+    top: 0;
+    left: 0;
+  }
+
+  div.triangle{
+    width: 0px;
+    height: 0px;
+    border: 30px solid transparent;
+    border-left: 50px solid #FFFFFF;
+    background-color: transparent;
+    margin-left: 25px;
   }

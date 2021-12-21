@@ -11,6 +11,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet"> 
 </head>
 <body>
+    <div class="yt">
+        <div class="triangle"></div>
+    </div>
     <div class="container">
         <h1 class="label">Question</h1>
         <div class="choices">
@@ -70,7 +73,7 @@
                 document.querySelector("button.next").style.display = "none"
             }else{
                 document.querySelector("button.prev").style.display = "block"
-                document.querySelector("button.res").style.display = "none"
+                document.querySelector("button.res").style.display = "block"
                 document.querySelector("button.next").style.display = "block"
             }
            console.log(response)
@@ -85,6 +88,101 @@
             socket.emit('action', {'action': action, 'answer': answer})
         }
 
+    </script>
+    <script>
+        var logo = document.querySelector("div.yt")
+        var direction = 'se';
+        var speed = 4;
+        var xMax = window.innerWidth - boxLeft - boxWidth;
+        var xMin = -boxLeft;
+        var yMax = window.innerHeight - boxTop - boxWidth;
+        var yMin = -boxTop;
+        var boxWidth = logo.offsetWidth;
+        var boxHeight = logo.offsetHeight;
+        var boxTop = logo.offsetTop;
+        var boxLeft = logo.offsetLeft;
+        var timeout = null;
+        var translateX = Math.floor((Math.random() * window.innerWidth) + 1)
+        var translateY = Math.floor((Math.random() * window.innerHeight) + 1)
+        function update(){
+            xMin = -boxLeft;
+            xMax = window.innerWidth - boxLeft - boxWidth;
+            yMin = -boxTop;
+            yMax = window.innerHeight - boxTop - boxHeight;
+        }
+
+        window.addEventListener('resize', function(argument) {
+            clearTimeout(timeout);
+            timeout = setTimeout(update, 100);
+        }, false);
+
+        setInterval(function() {
+            update();
+            move();
+        }, 10);
+
+        function move(){
+            setDirection();
+            logo.style.transform = 'translate3d(' + translateX + 'px, ' + translateY + 'px, 0)';
+
+        }
+
+        function setDirection(){
+            switch(direction){
+                case 'ne':
+                    translateX += speed;
+                    translateY -= speed;
+                    break;
+                case 'nw':
+                    translateX -= speed;
+                    translateY -= speed;
+                    break;
+                case 'se':
+                    translateX += speed;
+                    translateY += speed;
+                    break;
+                case 'sw':
+                    translateX -= speed;
+                    translateY += speed;
+                    break;
+            }
+            setLimits();
+        }
+
+        function setLimits(){
+            if (translateY <= yMin){
+                if (direction == 'nw'){
+                    direction = 'sw'
+                } else if (direction == 'ne'){
+                    direction = 'se'
+                }
+                //switchcolor
+            }
+            if (translateY >= yMax){
+                if (direction == 'se'){
+                    direction = 'ne';
+                }else if (direction == 'sw'){
+                    direction = 'nw';
+                }
+                //switchcolor
+            }
+            if (translateX <= xMin) {
+                if (direction == 'nw') {
+                    direction = 'ne';
+                } else if (direction == 'sw') {
+                    direction = 'se';
+                }
+                //switchColor();
+            }
+            if (translateX >= xMax) {
+                if (direction == 'ne') {
+                    direction = 'nw';
+                } else if (direction == 'se') {
+                    direction = 'sw';
+                }
+                //switchColor();
+            }
+        }
     </script>
 </body>
 </html>
