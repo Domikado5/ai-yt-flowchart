@@ -92,7 +92,7 @@
     <script>
         var logo = document.querySelector("div.yt")
         var direction = 'se';
-        var speed = 4;
+        var speed = 2;
         var xMax = window.innerWidth - boxLeft - boxWidth;
         var xMin = -boxLeft;
         var yMax = window.innerHeight - boxTop - boxWidth;
@@ -124,7 +124,6 @@
         function move(){
             setDirection();
             logo.style.transform = 'translate3d(' + translateX + 'px, ' + translateY + 'px, 0)';
-
         }
 
         function setDirection(){
