@@ -1,13 +1,16 @@
 # Youtube flow chart
 
+## Authors
+
+Dominik Sawicki 145402
+
+Sebastian Szczepaniak 145280
+
 ## Description
 
 This program is the representation of youtube flowchart. The flowchart was made in CLIPS but the whole interface was made in Python using clipspy library. The user interface was made in plain HTML and CSS with Flask framework as backend. The communication between user and backend was made with websockets.
 
-## Authors
 
-Dominik Sawicki 145402
-Sebastian Szczepaniak 145280
 
 ![flowchart](youtubeflowchart_final_big.divide.VLOGGER.jpg)
 
